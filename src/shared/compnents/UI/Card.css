@@ -4,5 +4,10 @@
   border-radius: 6px;
   /* padding: 1rem; */
   overflow: hidden;
+  /* background: white; */
+}
+
+.card.no-users {
+  padding: 1rem;
   background: white;
 }
