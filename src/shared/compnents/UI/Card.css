@@ -11,3 +11,7 @@
   padding: 1rem;
   background: white;
 }
+
+.card.places {
+  background-color: white;
+}
