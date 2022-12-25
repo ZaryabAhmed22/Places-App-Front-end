@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import PlacesList from "../components/PlacesList";
 
 const DUMMY_PLACES = [
@@ -32,5 +33,14 @@ const DUMMY_PLACES = [
 ];
 
 export default function UserPlaces() {
-  return <PlacesList items={DUMMY_PLACES} />;
+  //Using the useParams hooks which gives the parameters of the path of the Route where this component is called
+  const params = useParams();
+  console.log(params);
+
+  const filteredPlaces = DUMMY_PLACES.filter((place) => {
+    return place.creator === params.uid;
+  });
+  console.log(filteredPlaces);
+
+  return <PlacesList items={filteredPlaces} />;
 }
