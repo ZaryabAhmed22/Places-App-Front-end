@@ -1,5 +1,9 @@
 import React from "react";
 import Input from "../../shared/compnents/FormElements/Input";
+import {
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_REQUIRE,
+} from "../../shared/util/validators";
 import "./NewPlace.css";
 
 export default function NewPlace() {
@@ -9,7 +13,7 @@ export default function NewPlace() {
         element="input"
         type="text"
         label="Title"
-        validators={[]}
+        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH()]}
         errorText="Please enter a valid text"
       />
     </form>
