@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../shared/compnents/FormElements/Button";
 import Card from "../../shared/compnents/UI/Card";
+import Map from "../../shared/compnents/UI/Map";
 import Modal from "../../shared/compnents/UI/Modal";
 import "./PlaceItem.css";
 
@@ -27,7 +28,7 @@ export default function PlaceItem(props) {
           footer={<Button onClick={closeModalHandler}>Close</Button>}
         >
           <div className="map-container">
-            <h2>THE MAP</h2>
+            <Map center={props.place.location} title={props.place.title} />
           </div>
         </Modal>
       )}

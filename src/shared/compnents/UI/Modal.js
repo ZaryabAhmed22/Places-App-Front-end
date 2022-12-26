@@ -3,6 +3,7 @@ import Backdrop from "./Backdrop";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import "./Modal.css";
+import Button from "../FormElements/Button";
 
 function ModalOverlay(props) {
   const content = (
@@ -16,7 +17,9 @@ function ModalOverlay(props) {
         <div className={`modal__content ${props.contentClass}`}>
           {props.children}
         </div>
-        <footer className={`modal__footer ${props.footerClass}`}></footer>
+        <footer className={`modal__footer ${props.footerClass}`}>
+          <Button onClick={props.onCancel}>Close</Button>
+        </footer>
       </form>
     </div>
   );
