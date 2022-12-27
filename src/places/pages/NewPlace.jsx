@@ -6,32 +6,33 @@ import {
 } from "../../shared/util/validators";
 import "./PlaceForm.css";
 import Button from "../../shared/compnents/FormElements/Button";
+import useForm from "../../shared/hooks/form-hook";
 
-//Reducer function to manage the form state
-function formReducer(state, action) {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        formIsValid: formIsValid,
-      };
+// //Reducer function to manage the form state
+// function formReducer(state, action) {
+//   switch (action.type) {
+//     case "INPUT_CHANGE":
+//       let formIsValid = true;
+//       for (const inputId in state.inputs) {
+//         if (inputId === action.inputId) {
+//           formIsValid = formIsValid && action.isValid;
+//         } else {
+//           formIsValid = formIsValid && state.inputs[inputId].isValid;
+//         }
+//       }
+//       return {
+//         ...state,
+//         inputs: {
+//           ...state.inputs,
+//           [action.inputId]: { value: action.value, isValid: action.isValid },
+//         },
+//         formIsValid: formIsValid,
+//       };
 
-    default:
-      return state;
-  }
-}
+//     default:
+//       return state;
+//   }
+// }
 
 const initialFormState = {
   inputs: {
@@ -44,20 +45,24 @@ const initialFormState = {
 
 export default function NewPlace() {
   //Using the useRecuder hook to manage the form state
-  const [formState, dispatchForm] = useReducer(formReducer, initialFormState);
+  //const [formState, dispatchForm] = useReducer(formReducer, initialFormState);
+
+  //Using the CUSTOM HOOK for FORM
+  const [formState, inputChangeHandler] = useForm(initialFormState);
 
   //Pulling the state up from the child component "Input"
   // >> Using the useCallback hook to avoid unecesssary re-evaluation of title change handler because functions are premitive valuee and whenever their state changes they are re allocated to the memory and cause the component to re-render hance this will create an infinte loop
-  const inputChangeHandler = useCallback((id, value, isValid) => {
-    //The dispatch function is called with a type and some payloads. Whenever the dispatch is called, the reducer function is called which updates the state. The updated state is then returned through the useReducer hook
-    dispatchForm({
-      type: "INPUT_CHANGE",
-      inputId: id,
-      isValid: isValid,
-      value: value,
-    });
-    // console.log(id, value, isValid);
-  }, []);
+  //--------------------- THIS IS NOW IN CUSTOM HOOK ------------------------------
+  // const inputChangeHandler = useCallback((id, value, isValid) => {
+  //   //The dispatch function is called with a type and some payloads. Whenever the dispatch is called, the reducer function is called which updates the state. The updated state is then returned through the useReducer hook
+  //   dispatchForm({
+  //     type: "INPUT_CHANGE",
+  //     inputId: id,
+  //     isValid: isValid,
+  //     value: value,
+  //   });
+  //   // console.log(id, value, isValid);
+  // }, []);
 
   const placeSubmitHandler = (e) => {
     e.preventDefault();
