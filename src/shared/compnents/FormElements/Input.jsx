@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { validate } from "../../util/validators";
 import "./Input.css";
 
@@ -24,11 +24,29 @@ function inputReducer(state, action) {
 // Initial state for the useReducer hook
 const initialInputState = { value: "", isTouched: false, isValid: false };
 
+//Using the useReducer hook to manage the complex state
 export default function Input(props) {
   const [inputState, dispatchInput] = useReducer(
     inputReducer,
     initialInputState
   );
+
+  // >> Using the object destructuring for clean code
+  const { id, onInput } = props;
+  const { value, isValid } = inputState;
+
+  //Using the useEffect hook to avoid unessary re-rendering
+  useEffect(() => {
+    //Lifting the state up to the parent component NewPlace
+    onInput(id, value, isValid);
+
+    const timeOut = setTimeout(() => {}, 1000);
+
+    //Cleanup function
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [id, value, isValid]);
 
   function changeHandler(e) {
     dispatchInput({

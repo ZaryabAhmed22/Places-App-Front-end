@@ -6,7 +6,7 @@ const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_FILE = "FILE";
 
-// These are the validator functions that sre used as per demand and return an object
+// These are the validator functions that are used as per demand and only return an object with a type in every case and in some cases the value as well
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
 export const VALIDATOR_MINLENGTH = (val) => ({
