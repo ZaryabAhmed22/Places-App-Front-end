@@ -22,14 +22,19 @@ function inputReducer(state, action) {
 }
 
 // Initial state for the useReducer hook
-const initialInputState = { value: "", isTouched: false, isValid: false };
+// const initialInputState = {
+//   value: props.value || "",
+//   isTouched: false,
+//   isValid: props.valid || false,
+// };
 
 //Using the useReducer hook to manage the complex state
 export default function Input(props) {
-  const [inputState, dispatchInput] = useReducer(
-    inputReducer,
-    initialInputState
-  );
+  const [inputState, dispatchInput] = useReducer(inputReducer, {
+    value: props.value || "",
+    isTouched: false,
+    isValid: props.valid || false,
+  });
 
   // >> Using the object destructuring for clean code and pass in as dependencies
   const { id, onInput } = props;

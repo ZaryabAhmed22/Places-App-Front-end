@@ -4,7 +4,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
-import "./NewPlace.css";
+import "./PlaceForm.css";
 import Button from "../../shared/compnents/FormElements/Button";
 
 //Reducer function to manage the form state
