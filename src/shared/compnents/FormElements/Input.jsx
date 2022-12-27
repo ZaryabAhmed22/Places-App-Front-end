@@ -31,7 +31,7 @@ export default function Input(props) {
     initialInputState
   );
 
-  // >> Using the object destructuring for clean code
+  // >> Using the object destructuring for clean code and pass in as dependencies
   const { id, onInput } = props;
   const { value, isValid } = inputState;
 
@@ -40,14 +40,15 @@ export default function Input(props) {
     //Lifting the state up to the parent component NewPlace
     onInput(id, value, isValid);
 
-    const timeOut = setTimeout(() => {}, 1000);
+    // const timeOut = setTimeout(() => {}, 1000);
 
-    //Cleanup function
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [id, value, isValid]);
+    // //Cleanup function
+    // return () => {
+    //   clearTimeout(timeOut);
+    // };
+  }, [id, value, isValid, onInput]);
 
+  //The onChange handler function
   function changeHandler(e) {
     dispatchInput({
       type: "CHANGE",
