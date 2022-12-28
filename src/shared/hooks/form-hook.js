@@ -20,6 +20,11 @@ function formReducer(state, action) {
         },
         formIsValid: formIsValid,
       };
+    case "SET_DATA":
+      return {
+        inputs: action.inputs,
+        isValid: action.formIsValid,
+      };
 
     default:
       return state;
@@ -52,6 +57,15 @@ export default function useForm(initialFormState) {
     // console.log(id, value, isValid);
   }, []);
 
+  //In case we want to set default values, and keeping in mind that data may take some time to load when fetched from the API, we dispatch one more action if the the following function is called
+  const setFormData = useCallback((inputData, formValidity) => {
+    dispatchForm({
+      type: "SET_DATA",
+      inputs: inputData,
+      formIsValid: formValidity,
+    });
+  }, []);
+
   //Returning values from the hook
-  return [formState, inputChangeHandler];
+  return [formState, inputChangeHandler, setFormData];
 }

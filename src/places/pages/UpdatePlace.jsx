@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../shared/compnents/FormElements/Button";
 import Input from "../../shared/compnents/FormElements/Input";
@@ -39,21 +39,37 @@ const DUMMY_PLACES = [
 ];
 
 export default function UpdatePlace() {
+  const [isLoading, setIsLoading] = useState(true);
   //The useParam hooks from react-router-dom returns all the parameters inside the route url
   const params = useParams();
   const placeId = params.pid;
 
-  //Finding the places that matches the pid parameter
-  const identifiedPlace = DUMMY_PLACES.find((place) => place.id === placeId);
+  // //Finding the places that matches the pid parameter
+  // const identifiedPlace = DUMMY_PLACES.find((place) => place.id === placeId);
 
   //Calling the custom hook for form
-  const [formState, inputChangeHandler] = useForm({
+  const [formState, inputChangeHandler, setFormData] = useForm({
     inputs: {
-      title: { value: identifiedPlace.title, isValid: true },
-      description: { value: identifiedPlace.description, isValid: true },
+      title: { value: "", isValid: false },
+      description: { value: "", isValid: false },
     },
-    formIsValid: true,
+    formIsValid: false,
   });
+
+  //Finding the places that matches the pid parameter >> initializing it here so that we can mimic the fact that the data is loaded a bit late
+  const identifiedPlace = DUMMY_PLACES.find((place) => place.id === placeId);
+
+  //Since setFormData is a side effect, we use useEffect to avoid re renders
+  useEffect(() => {
+    setFormData(
+      {
+        title: { value: identifiedPlace.title, isValid: true },
+        description: { value: identifiedPlace.description, isValid: true },
+      },
+      true
+    );
+    setIsLoading(false);
+  }, [setFormData, identifiedPlace]);
 
   //If no places are  found at that url
   if (!identifiedPlace) {
@@ -64,15 +80,23 @@ export default function UpdatePlace() {
     );
   }
 
+  //If no places are loaded yet
+  if (isLoading) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
   //Handler for form submission
   const updatePlaceHandler = (e) => {
     e.preventDefault();
     console.log(formState); //Send this data to the API
   };
 
-  console.log(formState);
-
   return (
+    //Rendering the for only once the places are loaded
+
     <form className="place-form" onSubmit={updatePlaceHandler}>
       <Input
         id="title"
