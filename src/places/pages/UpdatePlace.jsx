@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../shared/compnents/FormElements/Button";
 import Input from "../../shared/compnents/FormElements/Input";
+import Card from "../../shared/compnents/UI/Card";
 import useForm from "../../shared/hooks/form-hook";
 import {
   VALIDATOR_MINLENGTH,
@@ -61,13 +62,15 @@ export default function UpdatePlace() {
 
   //Since setFormData is a side effect, we use useEffect to avoid re renders
   useEffect(() => {
-    setFormData(
-      {
-        title: { value: identifiedPlace.title, isValid: true },
-        description: { value: identifiedPlace.description, isValid: true },
-      },
-      true
-    );
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: { value: identifiedPlace.title, isValid: true },
+          description: { value: identifiedPlace.description, isValid: true },
+        },
+        true
+      );
+    }
     setIsLoading(false);
   }, [setFormData, identifiedPlace]);
 
@@ -75,7 +78,9 @@ export default function UpdatePlace() {
   if (!identifiedPlace) {
     return (
       <div className="center">
-        <h2>Could not find place</h2>
+        <Card className="no-users">
+          <h2>Could not find place</h2>
+        </Card>
       </div>
     );
   }

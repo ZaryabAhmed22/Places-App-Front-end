@@ -50,7 +50,7 @@ export default function PlaceItem(props) {
             <Button inverse onClick={openModalHandler}>
               VIEW ON MAP
             </Button>
-            <Button to={`places/${props.place.id}`}>EDIT</Button>
+            <Button to={`/places/${props.place.id}`}>EDIT</Button>
             <Button danger>DELETE</Button>
           </div>
         </Card>
