@@ -49,6 +49,7 @@ export default function NewPlace() {
 
   //Using the CUSTOM HOOK for FORM
   const [formState, inputChangeHandler] = useForm(initialFormState);
+  console.log(formState);
 
   //Pulling the state up from the child component "Input"
   // >> Using the useCallback hook to avoid unecesssary re-evaluation of title change handler because functions are premitive valuee and whenever their state changes they are re allocated to the memory and cause the component to re-render hance this will create an infinte loop

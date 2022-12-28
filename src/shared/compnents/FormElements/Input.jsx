@@ -31,9 +31,9 @@ function inputReducer(state, action) {
 //Using the useReducer hook to manage the complex state
 export default function Input(props) {
   const [inputState, dispatchInput] = useReducer(inputReducer, {
-    value: props.value || "",
+    value: props.initialValue || "",
     isTouched: false,
-    isValid: props.valid || false,
+    isValid: props.initialyValid || false,
   });
 
   // >> Using the object destructuring for clean code and pass in as dependencies
