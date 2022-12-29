@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../shared/compnents/FormElements/Button";
 import Input from "../../shared/compnents/FormElements/Input";
 import Card from "../../shared/compnents/UI/Card";
@@ -11,8 +11,11 @@ import {
 import "./Auth.css";
 
 export default function Auth() {
+  //State for switching the Signup and login
+  const [isLoginMode, setIsLoginMode] = useState(true);
+
   //Calling the custom hook for form
-  const [formState, inputChangeHandler] = useForm({
+  const [formState, inputChangeHandler, setFormData] = useForm({
     inputs: {
       email: { value: "", isValid: false },
       password: { value: "", isValid: false },
@@ -28,6 +31,23 @@ export default function Auth() {
     console.log(formState); //Send this data to the API
   };
 
+  //Hanlder function for swtich button
+  function switchToHandler() {
+    if (!isLoginMode) {
+      setFormData(
+        { ...formState, name: undefined },
+        formState.inputs.email.isValid && formState.inputs.password.isValid
+      );
+    } else {
+      setFormData(
+        { ...formState.inputs, name: { value: "", isValid: false } },
+        false
+      );
+    }
+    setIsLoginMode((prevState) => {
+      return !prevState;
+    });
+  }
   return (
     //Rendering the for only once the places are loaded
     <Card
@@ -38,6 +58,17 @@ export default function Auth() {
       <hr />
       <div className="athentication">
         <form onSubmit={authenticateUSerHandler}>
+          {!isLoginMode && (
+            <Input
+              id="name"
+              type="name"
+              element="input"
+              validators={[VALIDATOR_REQUIRE()]}
+              label="Full Name"
+              errorText="Please enter a valid name"
+              onInput={inputChangeHandler}
+            />
+          )}
           <Input
             id="email"
             type="email"
@@ -58,9 +89,12 @@ export default function Auth() {
             onInput={inputChangeHandler}
           />
           <Button type="submit" disabled={!formState.formIsValid}>
-            LOGIN
+            {isLoginMode ? "LOGIN" : "SIGNUP"}
           </Button>
         </form>
+        <Button inverse onClick={switchToHandler}>
+          {isLoginMode ? "CREATE ACCOUNT" : "I HAVE AN ACCOUNT"}
+        </Button>
       </div>
     </Card>
   );

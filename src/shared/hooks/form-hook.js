@@ -6,6 +6,10 @@ function formReducer(state, action) {
     case "INPUT_CHANGE":
       let formIsValid = true;
       for (const inputId in state.inputs) {
+        if (!state.inputs[inputId]) {
+          //Skipping the loop interation if a property is undefined
+          continue;
+        }
         if (inputId === action.inputId) {
           formIsValid = formIsValid && action.isValid;
         } else {
@@ -23,7 +27,7 @@ function formReducer(state, action) {
     case "SET_DATA":
       return {
         inputs: action.inputs,
-        isValid: action.formIsValid,
+        formIsValid: action.formIsValid,
       };
 
     default:
