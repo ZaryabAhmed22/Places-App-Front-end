@@ -18,7 +18,7 @@ function ModalOverlay(props) {
           {props.children}
         </div>
         <footer className={`modal__footer ${props.footerClass}`}>
-          <Button onClick={props.onCancel}>Close</Button>
+          {props.footer}
         </footer>
       </form>
     </div>
