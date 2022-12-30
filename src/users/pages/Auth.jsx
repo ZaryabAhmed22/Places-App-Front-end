@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../shared/compnents/FormElements/Button";
 import Input from "../../shared/compnents/FormElements/Input";
 import Card from "../../shared/compnents/UI/Card";
+import { AuthContext } from "../../shared/context/auth-context";
 import useForm from "../../shared/hooks/form-hook";
 import {
   VALIDATOR_MINLENGTH,
@@ -11,6 +12,9 @@ import {
 import "./Auth.css";
 
 export default function Auth() {
+  //Consuming the context
+  const { login } = useContext(AuthContext);
+
   //State for switching the Signup and login
   const [isLoginMode, setIsLoginMode] = useState(true);
 
@@ -29,6 +33,7 @@ export default function Auth() {
   const authenticateUSerHandler = (e) => {
     e.preventDefault();
     console.log(formState); //Send this data to the API
+    login();
   };
 
   //Hanlder function for swtich button

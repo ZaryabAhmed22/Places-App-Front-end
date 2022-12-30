@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../shared/compnents/FormElements/Button";
 import Card from "../../shared/compnents/UI/Card";
 import Map from "../../shared/compnents/UI/Map";
 import Modal from "../../shared/compnents/UI/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceItem.css";
 
 export default function PlaceItem(props) {
+  //Consuming the context
+  const { isLoggedIn } = useContext(AuthContext);
+
   // using the useState hook to set the state for opening and closing the modal that displays the map
   const [showMap, setShowMap] = useState(false);
 
@@ -88,10 +92,14 @@ export default function PlaceItem(props) {
             <Button inverse onClick={openModalHandler}>
               VIEW ON MAP
             </Button>
-            <Button to={`/places/${props.place.id}`}>EDIT</Button>
-            <Button danger onClick={showDeleteWarningHandler}>
-              DELETE
-            </Button>
+            {isLoggedIn && (
+              <Button to={`/places/${props.place.id}`}>EDIT</Button>
+            )}
+            {isLoggedIn && (
+              <Button danger onClick={showDeleteWarningHandler}>
+                DELETE
+              </Button>
+            )}
           </div>
         </Card>
       </li>
